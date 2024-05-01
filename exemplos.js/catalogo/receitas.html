@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Receitas</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="container-fluid bg-warning" onload="preencheCatalogo()">
+    <h1>Catálogo de Receitas</h1>
+
+    <div id="pnlCatalogo" style="display: flex; flex-wrap: wrap; justify-content: center;"></div>
+
+    <script>
+        // Dados das receitas em formato JSON
+        var receitas = [
+            {
+                titulo: "Bolo de Chocolate",
+                imagem: "bolo.jpg",
+                preparo: "Lorem Ipsum é simplesmente um texto fictício da indústria de impressão e composição tipográfica....",
+                ingredientes: ["Farinha", "Açúcar", "Ovos", "Chocolate em pó"]
+            },
+            {
+                titulo: "Arroz",
+                imagem: "arroz.jpeg",
+                preparo: "Lorem Ipsum é simplesmente um texto fictício da indústria de impressão e composição tipográfica....",
+                ingredientes: ["Massa de lasanha", "Molho de tomate", "Queijo", "Presunto"]
+            },
+            {
+                titulo: "Coxinha",
+                imagem: "coxinha.jpeg",
+                preparo: "PLorem Ipsum é simplesmente um texto fictício da indústria de impressão e composição tipográfica....",
+                ingredientes: ["Leite Condesado", "Chocolate em PO", "Mandeiga", "MOrango"]
+            }
+        ];
+
+        // Função para obter a lista de ingredientes em HTML
+        function getListaIngredientes(receita) {
+            return `<ul>${receita.ingredientes.map(ingrediente => `<li>${ingrediente}</li>`).reduce((acc, cur) => acc + cur, '')}</ul>`;
+        }
+
+        // Função para gerar o card de uma receita em HTML
+        function getCard(receita) {
+            return `
+            <div class="card" style="width: 250px;">
+                <img class="card-img-top mx-auto" src="${receita.imagem}" alt="Imagem da Receita" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">${receita.titulo}</h5>
+                    <div class="card-text">
+                        ${getListaIngredientes(receita)}
+                        <hr>
+                        <p>${receita.preparo}</p>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        // Função para preencher o catálogo de receitas na página
+        function preencheCatalogo() {
+            var pnlCatalogo = document.getElementById("pnlCatalogo");
+            var htmlReceitas = receitas.map(receita => getCard(receita)).reduce((acc, cur) => acc + cur, '');
+            pnlCatalogo.innerHTML = htmlReceitas;
+        }
+    </script>
+</body>
+</html>

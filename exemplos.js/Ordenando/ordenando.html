@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenando</title>
+    <script src="ordenando.js" defer></script>
+</head>
+<body>
+    <h1>Ordenando Valores</h1>
+
+    <label for="valor">Valor:</label>
+    <input type="number" id="valor">
+    <button onclick="add()">Adicionar</button>
+
+    <br><br>
+
+    <label for="algoritmo">Algoritmo de Ordenação:</label>
+    <select id="algoritmo">
+        <option value="bubble">Bubble Sort</option>
+        <option value="selection">Selection Sort</option>
+        <option value="quick" selected>Quick Sort</option>
+    </select>
+    <button onclick="ordenar()">Ordenar</button>
+    <button onclick="misturar()">Misturar</button>
+
+    <ul id="valores"></ul>
+
+    <script>
+        function add() {
+            let valorInput = document.getElementById('valor').value;
+            let listaValores = document.getElementById('valores');
+            let node = document.createElement('li');
+            let textNode = document.createTextNode(valorInput);
+            node.appendChild(textNode);
+            listaValores.appendChild(node);
+        }
+
+        function ordenar() {
+            let listaValores = document.getElementById('valores');
+            let algoritmo = document.getElementById('algoritmo').value;
+
+            let valores = Array.from(listaValores.children).map(item => parseInt(item.innerHTML));
+
+            switch (algoritmo) {
+                case 'bubble':
+                    bubbleSort(valores);
+                    break;
+                case 'selection':
+                    selectionSort(valores);
+                    break;
+                case 'quick':
+                    quickSort(valores, 0, valores.length - 1);
+                    break;
+                default:
+                    console.error('Algoritmo de ordenação inválido');
+                    return;
+            }
+
+            listaValores.innerHTML = valores.map(item => `<li>${item}</li>`).reduce((acc, val) => acc + val, '');
+        }
+
+        function misturar() {
+            let listaValores = document.getElementById('valores');
+            let valores = Array.from(listaValores.children).map(item => parseInt(item.innerHTML));
+            shuffle(valores, valores.length * 2);
+            listaValores.innerHTML = valores.map(item => `<li>${item}</li>`).reduce((acc, val) => acc + val, '');
+        }
+    </script>
+</body>
+</html>
